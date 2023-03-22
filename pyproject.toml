@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Mikhail Fedorov <mikhailfedorov1939@gmail.com>"]
 readme = "README.md"
-packages = [{include = "art_vostorg"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

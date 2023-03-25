@@ -64,7 +64,6 @@ INSTALLED_APPS = [
 
     'sorl.thumbnail',
     'bootstrap5',
-    'debug_toolbar',
     'tinymce',
     'storages',
 

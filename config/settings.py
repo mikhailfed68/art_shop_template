@@ -67,6 +67,8 @@ INSTALLED_APPS = [
 
 
     'art_vostorg',
+    'users',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'users.middleware.UserActiveMidlleware',
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
@@ -118,7 +121,13 @@ DATABASES = {
 }
 
 
-
+# Cache settings
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": os.getenv("REDIS_URL"),
+    },
+}
 
 CACHE_MIDDLEWARE_SECONDS = json.loads(os.getenv("CACHE_MIDDLEWARE_SECONDS", "0"))
 
@@ -168,6 +177,26 @@ TIME_ZONE = "Europe/Moscow"
 USE_I18N = True
 
 USE_TZ = True
+
+
+# Online system settings
+USER_ONLINE_TIMEOUT = json.loads(os.getenv("USER_ONLINE_TIMEOUT", "60"))
+
+USER_LAST_SEEN_TIMEOUT = json.loads(os.getenv("USER_LAST_SEEN_TIMEOUT", "86400"))
+
+
+# Settings for base group of users on the site
+BASE_GROUP = os.getenv("BASE_GROUP", "base_members_of_site")
+
+PERMISSIONS_FOR_BASE_GROUP = json.loads(os.getenv("PERMISSIONS_FOR_BASE_GROUP", "false"))
+
+# Default settings for base group
+if not PERMISSIONS_FOR_BASE_GROUP:
+    PERMISSIONS_FOR_BASE_GROUP = [
+        "change_user",
+        "delete_user",
+        "view_user",
+    ]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -230,6 +259,16 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Authentication setitngs 
+LOGIN_REDIRECT_URL = "/"
+
+LOGOUT_REDIRECT_URL = "/"
+
+LOGIN_URL = "login"
+
+AUTH_USER_MODEL = "users.User"
 
 
 # Setting for django-debug-tool-bar

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактирование профиля | {{ user.get_username }} {% endblock %}
+
+{% block style %}
+{{ form.media.css }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{{ form.media.js }}
+{% endblock %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data" class="col-lg-6 mx-lg-auto">
+  {% csrf_token %}
+  {% load bootstrap5 %}
+  {% bootstrap_form form %}
+  {% buttons %}
+  <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;">
+    Сохранить
+  </button>
+  {% endbuttons %}
+</form>
+
+<div class="col-lg-6 mx-lg-auto">
+  <!-- Кнопка-триггер модального окна -->
+  <button type="button" class="btn btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Удалить аккаунт
+  </button>
+  <a href="{% url 'password_change' %}" class="btn btn-secondary mt-2">Изменить пароль</a>
+</div>
+
+
+<!-- Модальное окно -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="RemoveModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Удаление аккаунта</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        Вы уверены что хотите удалить ваш аккаунт?
+        Аккаунт будет удален навсегда.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <form action="{% url 'users:destroy_user' user.get_username %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger" onclick="this.form.submit(); this.disabled = true;">
+            Удалить
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

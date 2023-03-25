@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Автор | {{ member.get_username }} {% endblock %}
+
+{% block content %}
+<h2 class="display-4 mb-3">Профиль</h2>
+
+<div class="mb-3">
+  {% load thumbnail %}
+  {% thumbnail member.profile_picture "75x75" crop="center" as im %}
+  <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid img-thumbnail rounded-pill"
+    alt="profile-picture">
+  {% empty %}
+  {% load static %}
+  <img src="{% static 'users/images/default.jpg' %}" width="75" height="75" class="img-fluid img-thumbnail rounded-pill"
+    alt="profile-picture">
+  {% endthumbnail %}
+
+  <b>{{ member.get_username }}</b> {% if member.is_online %}<span class="text-success">Online</span>{% endif %}
+</div>
+
+<div class="mt-2 mb-5">
+  {% if not member.is_online %}
+  {% if member.last_seen %}
+  {% load humanize %}
+  <span>Был(-а) в сети: {{ member.last_seen|naturaltime }}</span>
+  {% else %}
+  <span>Был(-а) в сети: Давно</span>
+  {% endif %}
+  {% endif %}
+</div>
+
+{% if member.get_full_name %}
+<p><b>Полностью: </b>{{ member.get_full_name }}</p>
+{% endif %}
+
+{% if member.about_me %}
+<p><b>О себе: </b>{{ member.about_me }}</p>
+{% endif %}
+{% endblock %}

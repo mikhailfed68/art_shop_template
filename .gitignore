@@ -1,8 +1,7 @@
 __pycache__
 *.pyc
 
-media
-static
+
 staticdocker
 mediadocker
 

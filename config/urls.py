@@ -27,6 +27,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
+urlpatterns += [
+    # 'неявные' view из auth app (шаблоны лежат в /templates/registration)
+    path("users/", include("django.contrib.auth.urls")),
+    # остальные view и шаблоны пользователей лежат в users app
+    path("users/", include("users.urls")),
+]
+
+urlpatterns += [
+    path('tinymce/', include('tinymce.urls')),
+]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += [

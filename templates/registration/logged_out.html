@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Выход{% endblock %}
+
+{% block content %}
+<div class="col-6 mx-auto">
+  <p>Вы вышли!</p>
+
+  <a href="{% url 'login'%}">Перейдите сюда, что бы войти снова</a>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+{% load bootstrap5 %}
+{% load static %}
+
+<div class="mb-4 col-1 mx-auto">
+  <img src="{% static 'art_vostorg/images/art_vostorg.png' %}" alt="label" width="120" height="120">
+</div>
+
+<form class="col-md-3 mx-md-auto" method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  
+  {% bootstrap_field form.username  %}
+  {% bootstrap_field form.password %}
+
+  <button class="w-100 btn btn-lg btn-primary mb-3" type="submit" onclick="this.form.submit(); this.disabled = true;">
+    Войти
+  </button>
+  <input type="hidden" name="next" value="{{ next }}"/>
+</form>
+
+<div class="col-md-3 mx-md-auto">
+  <a class="w-100 btn btn-lg btn-link" href="{% url 'users:signup' %}" type="submit">Регистрация</a>
+  <a class="w-100 btn btn-lg btn-link btn-sm" href="{% url 'password_reset' %}" type="submit">Забыли пароль?</a>
+</div>
+{% endblock %}

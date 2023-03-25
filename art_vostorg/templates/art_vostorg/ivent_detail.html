@@ -9,7 +9,7 @@
 
 <div class="clearfix">
   {% if ivent.title_photo %}
-  <img src="{{ ivent.title_photo.url }}" alt="title-photo" class="float-md-end rounded">
+  <img src="{{ ivent.title_photo.url }}" alt="title-photo" class="img-fluid rounded float-md-end col-md-6">
   {% endif %}
 
   <p>Опубликовано: {{ ivent.created_at|date:"j E" }}</p>

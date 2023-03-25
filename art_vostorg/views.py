@@ -1,3 +1,16 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView, TemplateView
 
-# Create your views here.
+from art_vostorg import models
+
+
+class IventListView(ListView):
+    model = models.Ivent
+    paginate_by = 5
+
+
+class IventDetailView(DetailView):
+    model = models.Ivent
+
+
+class JoinToTeamView(TemplateView):
+    template_name = 'art_vostorg/join.html'

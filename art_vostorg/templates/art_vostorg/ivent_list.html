@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block style %}
+<style>
+  #top-section {
+    background: linear-gradient(0deg, #ef8a46, #ebeaea);
+  }
+</style>
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<section class="py-5 text-center container" id="top-section">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">Арт — объединение VOSTORG</h1>
+      <p class="lead text-muted">VOSTORG — это экосистема творческой молодежи со всей России, включающая в себя весь спектр творцов и авторов художественных и креативных индустрий.</p>
+      <p>
+        <a href="https://drive.google.com/file/d/1h_lcE3M_kB-nY2suAUAYH9Z6XLGciCIf/view" target="_blank" class="btn btn-primary my-2">
+          О нас
+        </a>
+        <a href="https://instagram.com/vostorg.store?igshid=YmMyMTA2M2Y=" target="_blank" class="btn btn-outline-secondary my-2">
+          VOSTORG STORE
+        </a>
+      </p>
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex mx-auto">
+        <li class="ms-3"><a class="text-muted" href="https://t.me/artVOSTORG" target="_blank">
+          <img src="{% static 'social/telegram.png' %}" alt="telegram" width="24" height="24">
+        </a></li>
+        <li class="ms-3"><a class="text-muted" href="https://vk.com/art_vostorg_ru" target="_blank">
+          <img src="{% static 'social/vk.png' %}" alt="vk" width="24" height="24">
+        </a></li>
+        <li class="ms-3 me-5"><a class="text-muted" href="https://instagram.com/art_vostorg.ru?igshid=NzNkNDdiOGI=" target="_blank">
+          <img src="{% static 'social/instagram.png' %}" alt="instagram" width="24" height="24">
+        </a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="album py-5 bg-light">
+  <div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for ivent in ivent_list %}
+      <div class="col">
+        <div class="card shadow-sm">
+
+          {% load thumbnail %}
+          {% thumbnail ivent.title_photo "510x510" crop="center" as im %}
+          <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="card-img-top h-100"
+            alt="title-photo">
+          {% empty %}
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+            role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#55595c"></rect>
+          </svg>
+          {% endthumbnail %}
+
+          <div class="card-body">
+            <h5 class="card-title">{{ ivent.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ ivent.created_at|date:"j E" }}</h6>
+            <p class="card-text">{{ ivent.description|truncatewords:10 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Открыть</button>
+              </div>
+              <small class="text-muted">
+                {% load humanize %}
+                {% if ivent.was_updated_recently %}
+                Обновлено {{ ivent.updated_at|naturaltime }}
+                {% else %}
+                Обновлено {{ ivent.updated_at|date }}
+                {% endif %}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

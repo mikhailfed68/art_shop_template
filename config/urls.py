@@ -24,6 +24,7 @@ admin.site.index_title = "Администрирование вашего сай
 admin.site.site_title = "Административный сайт Art-Vostorg.ru"
 
 urlpatterns = [
+    path('', include('art_vostorg.urls')),
     path('admin/', admin.site.urls),
 ]
 

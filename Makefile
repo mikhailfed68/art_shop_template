@@ -15,6 +15,7 @@ start:
 
 start-in-docker:
 	sleep 5
+	python3 -m manage makemigrations
 	python3 -m manage migrate
 	python3 -m manage collectstatic --no-input
 	python3 -m manage runserver 0.0.0.0:8000

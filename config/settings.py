@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'debug_toolbar',
     'tinymce',
+    'django-storages',
 
     'art_vostorg',
     'users',

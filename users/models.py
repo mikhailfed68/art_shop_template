@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.conf import settings
+from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.core.cache import cache
 from django.db import models
@@ -48,6 +49,10 @@ class User(AbstractUser):
     def last_seen(self):
         return cache.get(f"last_seen_{self.id}")
 
+    @admin.display(
+        boolean=True,
+        description='В сети',
+    )
     def is_online(self):
         last_seen = self.last_seen()
         if last_seen:

@@ -31,7 +31,7 @@ class Ivent(TimeStampedModel):
     description = models.CharField("Описание", max_length=256)
     body = HTMLField("Содержание")
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, verbose_name="Автор", on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, verbose_name="Автор", null=True, on_delete=models.SET_NULL
     )
 
     class Meta:

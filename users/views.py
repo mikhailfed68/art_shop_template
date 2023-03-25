@@ -50,7 +50,7 @@ class UserListView(ListView):
     """Rerturn the registred users list."""
 
     model = get_user_model()
-    paginate_by = 5
+    paginate_by = 6
 
 
 @method_decorator(decorator=atomic, name="dispatch")

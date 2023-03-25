@@ -5,7 +5,7 @@ from art_vostorg import models
 
 class IventListView(ListView):
     model = models.Ivent
-    paginate_by = 5
+    paginate_by = 6
 
 
 class IventDetailView(DetailView):

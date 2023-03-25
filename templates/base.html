@@ -35,6 +35,7 @@
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="{% url 'art_vostorg:ivent_list' %}" class="nav-link px-2 link-secondary">Главная</a></li>
           <li><a href="{% url 'users:users' %}" class="nav-link px-2 link-dark">Участники</a></li>
+          <li><a class="nav-link px-2 link-dark" href="{% url 'art_vostorg:join' %}">Присоединиться</a></li>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -53,7 +54,6 @@
             {% endthumbnail %}
           </a>
           <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="{% url 'art_vostorg:join' %}">Присоединиться</a></li>
             <li><a class="dropdown-item" href="{% url 'users:update_user' user.username %}">Настройки</a></li>
             <li><a class="dropdown-item" href="{% url 'users:profile' user.username %}">Профиль</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -107,7 +107,6 @@
   
   </main>
 
-  <!-- cache 84600 footer -->
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top mt-auto">
     <div class="col-md-4 d-flex align-items-center ms-3">
       <span class="text-muted">© 2023 Art-Vostorg, Inc</span>

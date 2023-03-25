@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'tinymce',
     'storages',
+    'debug_toolbar',
 
     'art_vostorg',
     'users',

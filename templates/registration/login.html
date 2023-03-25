@@ -12,9 +12,7 @@
 
 <form class="col-md-3 mx-md-auto" method="post" action="{% url 'login' %}">
   {% csrf_token %}
-  
-  {% bootstrap_field form.username  %}
-  {% bootstrap_field form.password %}
+  {% bootstrap_form form %}
 
   <button class="w-100 btn btn-lg btn-primary mb-3" type="submit" onclick="this.form.submit(); this.disabled = true;">
     Войти

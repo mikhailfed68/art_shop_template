@@ -12,3 +12,8 @@ env/
 *.env*
 venv/
 .venv/
+
+docker-compose.yml
+Makefile
+.dockerignore
+Dockerfile

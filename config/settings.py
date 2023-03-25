@@ -66,7 +66,6 @@ INSTALLED_APPS = [
     'bootstrap5',
     'tinymce',
     'storages',
-    'debug_toolbar',
 
     'art_vostorg',
     'users',
@@ -79,7 +78,6 @@ MIDDLEWARE = [
     "django.middleware.gzip.GZipMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     "django.middleware.http.ConditionalGetMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -274,6 +272,6 @@ AUTH_USER_MODEL = "users.User"
 
 
 # Setting for django-debug-tool-bar
-if DEBUG:
-    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [f"{ip[:-1]}1" for ip in ips] + ["127.0.0.1"]
+# if DEBUG:
+#     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+#     INTERNAL_IPS = [f"{ip[:-1]}1" for ip in ips] + ["127.0.0.1"]

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% block title %}Главная{% endblock %}</title>
+  {% load static %}
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon/favicon.jpg' %}">
+
+  {# Load the tag library #}
+  {% load bootstrap5 %}
+
+  {# Load CSS and JavaScript #}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+
+  {% load cache %}
+
+  {% block style %}{% endblock %}
+  {% load static %}
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+  <header class="p-3 mb-3 border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="{% url 'art_vostorg:ivent_list' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+          <img src="{% static 'art_vostorg/images/logo.jpg' %}" alt="logo" class="bi me-2" width="40" height="32">
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'art_vostorg:ivent_list' %}" class="nav-link px-2 link-secondary">Главная</a></li>
+          <li><a href="{% url 'users:users' %}" class="nav-link px-2 link-dark">Участники</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        </form>
+
+        {% if user.is_authenticated %}
+        <div class="dropdown text-end">
+
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            {% load thumbnail %}
+            {% thumbnail user.profile_picture "32x32" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="rounded-circle" alt="avatar">
+            {% empty %}
+            <img src="{% static 'users/images/default.jpg' %}" alt="avatar" width="32" height="32" class="rounded-circle">
+            {% endthumbnail %}
+          </a>
+          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" href="{% url 'art_vostorg:join' %}">Присоединиться</a></li>
+            <li><a class="dropdown-item" href="{% url 'users:update_user' user.username %}">Настройки</a></li>
+            <li><a class="dropdown-item" href="{% url 'users:profile' user.username %}">Профиль</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
+          </ul>
+        {% else %}
+          <a class="btn btn-outline-primary me-2" href="{% url 'login' %}?next={{request.path}}">Вход</a>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  
+  <main class="container mt-2 mb-5">
+    <!-- Display django.contrib.messages as Bootstrap alerts -->
+    {% bootstrap_messages %}
+
+    {% block content %}{% endblock %}
+
+    {% block pagination %}
+    {% if is_paginated %}
+    {% load url_replacer %}
+    <nav aria-label="Search results pages" class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link"
+            href="?{% replace_param page=page_obj.previous_page_number %}">Предыдущая</a></li>
+        <li class="page-item">
+          <a class="page-link" href="?{% replace_param page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="">Предыдущая</a></li>
+        {% endif %}
+
+        <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?{% replace_param page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+        </li>
+        <li class="page-item"><a class="page-link"
+            href="?{% replace_param page=page_obj.next_page_number %}">Следующая</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="">Следующая</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+    {% endblock %}
+  
+  </main>
+
+  <!-- cache 84600 footer -->
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top mt-auto">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+      <span class="text-muted">© 2023 Art-Vostorg, Inc</span>
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-muted" href="https://t.me/artVOSTORG" target="_blank">
+        <img src="{% static 'social/telegram.png' %}" alt="telegram" width="24" height="24">
+      </a></li>
+      <li class="ms-3"><a class="text-muted" href="https://vk.com/art_vostorg_ru" target="_blank">
+        <img src="{% static 'social/vk.png' %}" alt="vk" width="24" height="24">
+      </a></li>
+      <li class="ms-3 me-5"><a class="text-muted" href="https://instagram.com/art_vostorg.ru?igshid=NzNkNDdiOGI=" target="_blank">
+        <img src="{% static 'social/instagram.png' %}" alt="instagram" width="24" height="24">
+      </a></li>
+    </ul>
+  </footer>
+
+</body>
+
+</html>
